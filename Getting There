@@ -1,0 +1,96 @@
+clc;clear 
+global Players
+load Spaces;
+Properties=xlsread('Copy of Monopoly_spaces');
+Players_Ready=0;
+
+while ~Players_Ready
+N=input('How many players?  ');
+if(N<2)
+display('Not enough players.  Please input a number between 2 and 8')
+elseif(N>8)
+display('Too many players. Please input a number between 2 and 8') 
+else
+fprintf('Setting up for %d players \n',N)
+Players_Ready=1;
+end
+end
+Player_set(N)
+
+
+
+%marker information
+%First column is marker name
+%Second column is zero if unused; one if being used by another player
+marker{1,1}='Dog';
+marker{2,1}='Wheelbarrow';
+marker{3,1}='Iron';
+marker{4,1}='Racecar';
+marker{5,1}='Thimble';
+marker{6,1}='Top Hat';
+marker{7,1}='Shoe';
+marker{8,1}='Battleship';
+
+Continue=input('Do you have a saved game to continue? (Y=1/N=0)')
+if (Continue==1)
+%     Saved game variable file must be in the Current Matlab folder
+Game0=input('What is the name of the save file?','s');
+disp('Loading...')
+load(Game0);
+else
+disp('Begining a new game')
+
+
+for k=1:8
+marker{k,2}=0;
+end  
+
+for k=1:N
+fprintf('Player %d \n',k)
+disp('___________________')
+fprintf('What is Player %d''s name?  ',k)
+Player_name{k}=input(' ','s');
+fprintf('Hello %s! Please choose a marker from the choices below \n',Player_name{k})
+
+for kk=1:8
+if (marker{kk,2}==0)
+fprintf('(%d)  %s \n',kk,marker{kk,1})
+end
+end
+
+Player(k,5)=input('Enter the number of your choice');
+marker{Player(k,5),2}=Player(k,5);
+fprintf('%s has chosen the %s \n', Player_name{k},marker{Player(k,5)})
+clc;
+end
+
+for k=1:N
+fprintf('%s the %s is on %s \n',Player_name{k},marker{Player(k,5),1},Spaces{Player(k,1)})
+end
+end
+% save('Game0');
+
+while Game_Not_Over
+Round
+for k= 1:N
+% N players
+Turn %   menu of possible player actions 
+% add a Menu; track player positions...
+Status
+% board position and wealth status; check win conditions
+end
+% Give option to save game only at end of a round
+end
+
+function Player_set(N)
+%1st space occupied
+%2nd cash balance
+%3rd player wealth
+%4th player active
+%5th player token
+global player;
+player=zeros([N 5]);
+for i=1:N
+player(i,:)=[1 1500 1500 1 0];
+end
+end
