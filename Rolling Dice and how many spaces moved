@@ -1,0 +1,20 @@
+clear;clc
+RollA=randi(6);
+RollB=randi(6);
+RollC=randi(6);
+RollD=randi(6);
+if RollA==RollB
+    fprintf('You have rolled a %d and a %d \n',RollA,RollB) 
+    disp('Player rolled doubles and will roll again')
+if RollC~=RollD
+    fprintf('You have rolled a %d and a %d \n',RollC,RollD)
+disp('Next players turn')
+elseif RollC==RollD && RollA==RollB
+    fprintf('You have rolled a %d and a %d \n',RollC,RollD)
+    disp('Go to Jail')
+end
+end
+if RollA~=RollB
+    fprintf('You have rolled a %d and a %d \n',RollA,RollB)
+    disp('Next players turn')
+end
